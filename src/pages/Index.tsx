@@ -149,40 +149,48 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto space-y-8">
+      <div className="max-w-4xl mx-auto space-y-8">
+        {/* Page Header */}
+        <div className="text-center space-y-3 mb-12">
+          <h1 className="text-4xl font-bold text-foreground">
+            Mainframe Batch Job Failure Prediction
+          </h1>
+          <p className="text-muted-foreground text-lg">
+            Enter the job details below to predict the risk of failure. Our model analyzes various factors to provide an accurate prediction.
+          </p>
+        </div>
+
         {/* Input Form Card */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl font-bold">
-              Mainframe Batch Job Failure Prediction
+            <CardTitle className="text-2xl font-bold">
+              Input Form
             </CardTitle>
-            <CardDescription className="text-base">
-              Enter the details of the batch job to predict its likelihood of failure.
-            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handlePredict} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Job Name */}
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="jobName">Job Name</Label>
+                <div className="space-y-2">
+                  <Label htmlFor="jobName" className="text-sm font-medium uppercase">Job Name</Label>
                   <Input
                     id="jobName"
-                    placeholder="e.g., JOB001"
+                    placeholder="Enter job name"
                     value={formData.jobName}
                     onChange={(e) => handleInputChange("jobName", e.target.value)}
+                    className="bg-input border-border"
                   />
                 </div>
 
                 {/* Data Anomaly Flag */}
                 <div className="space-y-2">
-                  <Label htmlFor="dataAnomalyFlag">DATA ANOMALY FLAG</Label>
+                  <Label htmlFor="dataAnomalyFlag" className="text-sm font-medium uppercase">DATA ANOMALY FLAG</Label>
                   <Select
                     value={formData.dataAnomalyFlag}
                     onValueChange={(value) => handleInputChange("dataAnomalyFlag", value)}
                   >
-                    <SelectTrigger id="dataAnomalyFlag">
-                      <SelectValue placeholder="Select value" />
+                    <SelectTrigger id="dataAnomalyFlag" className="bg-input border-border">
+                      <SelectValue placeholder="Select flag" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="0">0</SelectItem>
@@ -193,24 +201,25 @@ const Index = () => {
 
                 {/* Total Transaction Volume */}
                 <div className="space-y-2">
-                  <Label htmlFor="totalTxnVolume">TOTAL TXN VOLUME</Label>
+                  <Label htmlFor="totalTxnVolume" className="text-sm font-medium uppercase">TOTAL TXN VOLUME</Label>
                   <Input
                     id="totalTxnVolume"
                     type="number"
-                    placeholder="e.g., 250000"
+                    placeholder="Enter volume"
                     value={formData.totalTxnVolume}
                     onChange={(e) => handleInputChange("totalTxnVolume", e.target.value)}
+                    className="bg-input border-border"
                   />
                 </div>
 
                 {/* ABEND Code */}
                 <div className="space-y-2">
-                  <Label htmlFor="abendCode">ABEND CODE</Label>
+                  <Label htmlFor="abendCode" className="text-sm font-medium uppercase">ABEND CODE</Label>
                   <Select
                     value={formData.abendCode}
                     onValueChange={(value) => handleInputChange("abendCode", value)}
                   >
-                    <SelectTrigger id="abendCode">
+                    <SelectTrigger id="abendCode" className="bg-input border-border">
                       <SelectValue placeholder="Select code" />
                     </SelectTrigger>
                     <SelectContent>
@@ -224,48 +233,51 @@ const Index = () => {
 
                 {/* Elapsed Sec */}
                 <div className="space-y-2">
-                  <Label htmlFor="elapsedSec">ELAPSED SEC</Label>
+                  <Label htmlFor="elapsedSec" className="text-sm font-medium uppercase">ELAPSED SEC</Label>
                   <Input
                     id="elapsedSec"
                     type="number"
-                    placeholder="e.g., 300"
+                    placeholder="Enter seconds"
                     value={formData.elapsedSec}
                     onChange={(e) => handleInputChange("elapsedSec", e.target.value)}
+                    className="bg-input border-border"
                   />
                 </div>
 
                 {/* CPU Sec */}
                 <div className="space-y-2">
-                  <Label htmlFor="cpuSec">CPU SEC</Label>
+                  <Label htmlFor="cpuSec" className="text-sm font-medium uppercase">CPU SEC</Label>
                   <Input
                     id="cpuSec"
                     type="number"
-                    placeholder="e.g., 50"
+                    placeholder="Enter seconds"
                     value={formData.cpuSec}
                     onChange={(e) => handleInputChange("cpuSec", e.target.value)}
+                    className="bg-input border-border"
                   />
                 </div>
 
                 {/* Disk Space Used MB */}
                 <div className="space-y-2">
-                  <Label htmlFor="diskSpaceUsedMb">DISK SPACE USED MB</Label>
+                  <Label htmlFor="diskSpaceUsedMb" className="text-sm font-medium uppercase">DISK SPACE USED MB</Label>
                   <Input
                     id="diskSpaceUsedMb"
                     type="number"
-                    placeholder="e.g., 1500"
+                    placeholder="Enter MB"
                     value={formData.diskSpaceUsedMb}
                     onChange={(e) => handleInputChange("diskSpaceUsedMb", e.target.value)}
+                    className="bg-input border-border"
                   />
                 </div>
 
                 {/* Storage Status */}
                 <div className="space-y-2">
-                  <Label htmlFor="storageStatus">STORAGE STATUS</Label>
+                  <Label htmlFor="storageStatus" className="text-sm font-medium uppercase">STORAGE STATUS</Label>
                   <Select
                     value={formData.storageStatus}
                     onValueChange={(value) => handleInputChange("storageStatus", value)}
                   >
-                    <SelectTrigger id="storageStatus">
+                    <SelectTrigger id="storageStatus" className="bg-input border-border">
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -278,13 +290,13 @@ const Index = () => {
 
                 {/* System ID */}
                 <div className="space-y-2">
-                  <Label htmlFor="systemId">SYSTEM ID</Label>
+                  <Label htmlFor="systemId" className="text-sm font-medium uppercase">SYSTEM ID</Label>
                   <Select
                     value={formData.systemId}
                     onValueChange={(value) => handleInputChange("systemId", value)}
                   >
-                    <SelectTrigger id="systemId">
-                      <SelectValue placeholder="Select system" />
+                    <SelectTrigger id="systemId" className="bg-input border-border">
+                      <SelectValue placeholder="Select ID" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="SYS_A">SYS_A</SelectItem>
@@ -296,61 +308,65 @@ const Index = () => {
 
                 {/* CPU Utilization % */}
                 <div className="space-y-2">
-                  <Label htmlFor="cpuUtilization">CPU UTILIZATION %</Label>
+                  <Label htmlFor="cpuUtilization" className="text-sm font-medium uppercase">CPU UTILIZATION %</Label>
                   <Input
                     id="cpuUtilization"
                     type="number"
-                    placeholder="e.g., 60"
+                    placeholder="Enter percentage"
                     value={formData.cpuUtilization}
                     onChange={(e) => handleInputChange("cpuUtilization", e.target.value)}
+                    className="bg-input border-border"
                   />
                 </div>
 
                 {/* JES Queue Time Sec */}
                 <div className="space-y-2">
-                  <Label htmlFor="jesQueueTimeSec">JES QUEUE TIME SEC</Label>
+                  <Label htmlFor="jesQueueTimeSec" className="text-sm font-medium uppercase">JES QUEUE TIME SEC</Label>
                   <Input
                     id="jesQueueTimeSec"
                     type="number"
-                    placeholder="e.g., 15"
+                    placeholder="Enter seconds"
                     value={formData.jesQueueTimeSec}
                     onChange={(e) => handleInputChange("jesQueueTimeSec", e.target.value)}
+                    className="bg-input border-border"
                   />
                 </div>
 
                 {/* Delay from Schedule */}
                 <div className="space-y-2">
-                  <Label htmlFor="delayFromSchedule">DELAY FROM SCHEDULE</Label>
+                  <Label htmlFor="delayFromSchedule" className="text-sm font-medium uppercase">DELAY FROM SCHEDULE</Label>
                   <Input
                     id="delayFromSchedule"
                     type="number"
-                    placeholder="e.g., 0"
+                    placeholder="Enter delay"
                     value={formData.delayFromSchedule}
                     onChange={(e) => handleInputChange("delayFromSchedule", e.target.value)}
+                    className="bg-input border-border"
                   />
                 </div>
 
                 {/* Restart Count */}
                 <div className="space-y-2">
-                  <Label htmlFor="restartCount">RESTART COUNT</Label>
+                  <Label htmlFor="restartCount" className="text-sm font-medium uppercase">RESTART COUNT</Label>
                   <Input
                     id="restartCount"
                     type="number"
-                    placeholder="e.g., 0"
+                    placeholder="Enter count"
                     value={formData.restartCount}
                     onChange={(e) => handleInputChange("restartCount", e.target.value)}
+                    className="bg-input border-border"
                   />
                 </div>
 
                 {/* Is Month End */}
                 <div className="space-y-2">
-                  <Label htmlFor="isMonthend">IS MONTHEND</Label>
+                  <Label htmlFor="isMonthend" className="text-sm font-medium uppercase">IS MONTHEND</Label>
                   <Select
                     value={formData.isMonthend}
                     onValueChange={(value) => handleInputChange("isMonthend", value)}
                   >
-                    <SelectTrigger id="isMonthend">
-                      <SelectValue placeholder="Select value" />
+                    <SelectTrigger id="isMonthend" className="bg-input border-border">
+                      <SelectValue placeholder="Select option" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="0">0</SelectItem>
@@ -360,8 +376,8 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center pt-4">
-                <Button type="submit" size="lg" className="w-full md:w-auto px-12" disabled={isLoading}>
+              <div className="flex justify-center pt-6">
+                <Button type="submit" size="lg" className="px-16" disabled={isLoading}>
                   {isLoading ? "Predicting..." : "Predict Failure Risk"}
                 </Button>
               </div>
@@ -376,13 +392,13 @@ const Index = () => {
           </CardHeader>
           <CardContent>
             {!predictionResult ? (
-              <p className="text-muted-foreground text-center py-8">
+              <p className="text-muted-foreground text-center py-12">
                 Results will be displayed here after prediction.
               </p>
             ) : (
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 rounded-lg bg-muted/50">
-                  <span className="font-medium">Prediction Status:</span>
+                <div className="flex items-center justify-between p-4 rounded-lg bg-muted/30">
+                  <span className="font-medium text-foreground">Prediction Status:</span>
                   <span
                     className={`font-bold text-lg ${
                       predictionResult.status === "FAIL"
@@ -394,14 +410,14 @@ const Index = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-lg bg-muted/50">
-                  <span className="font-medium">Failure Probability:</span>
-                  <span className="font-bold text-lg">{predictionResult.probability}</span>
+                <div className="flex items-center justify-between p-4 rounded-lg bg-muted/30">
+                  <span className="font-medium text-foreground">Failure Probability:</span>
+                  <span className="font-bold text-lg text-foreground">{predictionResult.probability}</span>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-lg bg-muted/50">
-                  <span className="font-medium">Predicted Cause:</span>
-                  <span className="font-semibold text-right max-w-xs">{predictionResult.cause}</span>
+                <div className="flex items-center justify-between p-4 rounded-lg bg-muted/30">
+                  <span className="font-medium text-foreground">Predicted Cause:</span>
+                  <span className="font-semibold text-right max-w-xs text-foreground">{predictionResult.cause}</span>
                 </div>
               </div>
             )}
