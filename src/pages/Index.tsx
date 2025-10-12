@@ -10,6 +10,7 @@ interface FormData {
   jobName: string;
   dataAnomalyFlag: string;
   totalTxnVolume: string;
+  abendCode: string;
   elapsedSec: string;
   cpuSec: string;
   diskSpaceUsedMb: string;
@@ -33,6 +34,7 @@ const Index = () => {
     jobName: "",
     dataAnomalyFlag: "",
     totalTxnVolume: "",
+    abendCode: "",
     elapsedSec: "",
     cpuSec: "",
     diskSpaceUsedMb: "",
@@ -59,6 +61,8 @@ const Index = () => {
     const restartCount = parseInt(formData.restartCount) || 0;
     const dataAnomaly = formData.dataAnomalyFlag === "1";
     const storageIsCritical = formData.storageStatus === "Critical";
+    const storageIsWarning = formData.storageStatus === "Warning";
+    const hasCriticalAbend = ["S0C7", "S322", "SB37"].includes(formData.abendCode);
 
     let failureScore = 0;
     let cause = "Normal Operation";
@@ -68,17 +72,23 @@ const Index = () => {
     if (cpuUtil > 75) failureScore += 25;
     if (restartCount > 0) failureScore += 20;
     if (dataAnomaly) failureScore += 15;
-    if (storageIsCritical) failureScore += 10;
+    if (storageIsCritical) failureScore += 15;
+    if (storageIsWarning) failureScore += 8;
+    if (hasCriticalAbend) failureScore += 25;
 
     // Determine cause
-    if (diskSpace > 1200 || storageIsCritical) {
-      cause = "Resource / Disk Space Issues";
+    if (hasCriticalAbend) {
+      cause = "Critical ABEND Code Detected";
+    } else if (diskSpace > 1200 || storageIsCritical) {
+      cause = "Storage / Disk Space Issues";
     } else if (cpuUtil > 75) {
       cause = "High CPU Utilization";
     } else if (restartCount > 0) {
       cause = "Multiple Restart Attempts";
     } else if (dataAnomaly) {
       cause = "Data Anomaly Detected";
+    } else if (storageIsWarning) {
+      cause = "Storage Warning Detected";
     }
 
     const probability = Math.min(95, Math.max(5, failureScore + Math.random() * 20)).toFixed(2);
@@ -99,6 +109,7 @@ const Index = () => {
       "jobName",
       "dataAnomalyFlag",
       "totalTxnVolume",
+      "abendCode",
       "elapsedSec",
       "cpuSec",
       "diskSpaceUsedMb",
@@ -192,6 +203,25 @@ const Index = () => {
                   />
                 </div>
 
+                {/* ABEND Code */}
+                <div className="space-y-2">
+                  <Label htmlFor="abendCode">ABEND CODE</Label>
+                  <Select
+                    value={formData.abendCode}
+                    onValueChange={(value) => handleInputChange("abendCode", value)}
+                  >
+                    <SelectTrigger id="abendCode">
+                      <SelectValue placeholder="Select code" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="S000">S000</SelectItem>
+                      <SelectItem value="S0C7">S0C7</SelectItem>
+                      <SelectItem value="S322">S322</SelectItem>
+                      <SelectItem value="SB37">SB37</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 {/* Elapsed Sec */}
                 <div className="space-y-2">
                   <Label htmlFor="elapsedSec">ELAPSED SEC</Label>
@@ -240,6 +270,7 @@ const Index = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="Normal">Normal</SelectItem>
+                      <SelectItem value="Warning">Warning</SelectItem>
                       <SelectItem value="Critical">Critical</SelectItem>
                     </SelectContent>
                   </Select>
